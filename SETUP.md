@@ -4,6 +4,33 @@ A step-by-step guide to run the Memory Tool locally and deploy it to GitHub Page
 
 ---
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Part 1: Run Locally](#part-1-run-locally)
+  - [Step 1 — Open the project folder](#step-1--open-the-project-folder)
+  - [Step 2 — Start a local server](#step-2--start-a-local-server)
+  - [Step 3 — Use the tool](#step-3--use-the-tool)
+- [Part 2: Deploy to GitHub Pages](#part-2-deploy-to-github-pages)
+  - [Step 1 — Create a GitHub repository](#step-1--create-a-github-repository)
+  - [Step 2 — Initialize Git and push](#step-2--initialize-git-and-push)
+  - [Step 3 — Enable GitHub Pages](#step-3--enable-github-pages)
+  - [Step 4 — Access your live site](#step-4--access-your-live-site)
+- [Part 3: Making Quick Updates (Direct to Main)](#part-3-making-quick-updates-direct-to-main)
+- [Part 4: Making Updates via Feature Branch](#part-4-making-updates-via-feature-branch)
+  - [Step 1 — Create a feature branch](#step-1--create-a-feature-branch)
+  - [Step 2 — Make your changes](#step-2--make-your-changes)
+  - [Step 3 — Test locally](#step-3--test-locally)
+  - [Step 4 — Commit and push the feature branch](#step-4--commit-and-push-the-feature-branch)
+  - [Step 5 — Create a Pull Request on GitHub](#step-5--create-a-pull-request-on-github)
+  - [Step 6 — Review and merge](#step-6--review-and-merge)
+  - [Step 7 — Clean up the feature branch](#step-7--clean-up-the-feature-branch)
+  - [Step 8 — Verify deployment](#step-8--verify-deployment)
+- [Project Files Reference](#project-files-reference)
+- [Troubleshooting](#troubleshooting)
+
+---
+
 ## Prerequisites
 
 | Tool | Purpose | Install |
@@ -13,6 +40,8 @@ A step-by-step guide to run the Memory Tool locally and deploy it to GitHub Page
 | **Web browser** | Running the app | Chrome, Firefox, Safari, or Edge |
 
 No Node.js, npm, or build tools are required — the project is plain HTML/CSS/JS.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -48,6 +77,8 @@ open index.html
 1. Open `http://localhost:8000` in your browser (if using Python server).
 2. Select a mode, enter list size, and click **Start**.
 3. Click **Next** to advance through the sequence.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -110,19 +141,129 @@ https://<username>.github.io/MemoryTool/
 
 GitHub shows the URL on the Pages settings page once the deployment is complete.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
-## Part 3: Making Updates
+## Part 3: Making Quick Updates (Direct to Main)
 
-After making changes to your files:
+For small, simple changes (typo fixes, minor tweaks), you can commit directly to `main`:
 
 ```bash
+# Make sure you're on main
+git checkout main
+
+# Make your changes, then:
 git add -A
 git commit -m "Describe your change"
 git push
 ```
 
 GitHub Pages will automatically rebuild and deploy within 1–2 minutes.
+
+> **When to use this:** Only for trivial changes. For any feature work, bug fixes, or UI adjustments, use the feature branch workflow below.
+
+[↑ Back to Top](#table-of-contents)
+
+---
+
+## Part 4: Making Updates via Feature Branch
+
+For any meaningful change (new feature, UI adjustment, bug fix), use a feature branch. This keeps `main` stable and gives you a clean history.
+
+### Step 1 — Create a feature branch
+
+Start from an up-to-date `main`:
+
+```bash
+# Switch to main and pull latest
+git checkout main
+git pull origin main
+
+# Create and switch to a new feature branch
+git checkout -b feature/your-feature-name
+```
+
+**Branch naming conventions:**
+| Prefix | Use for | Example |
+|--------|---------|---------|
+| `feature/` | New features | `feature/keyboard-shortcuts` |
+| `fix/` | Bug fixes | `fix/jumbled-sequence-repeat` |
+| `ui/` | UI/styling changes | `ui/dark-mode` |
+| `docs/` | Documentation updates | `docs/update-readme` |
+
+### Step 2 — Make your changes
+
+Edit the relevant files (`index.html`, `style.css`, `app.js`, etc.) as needed.
+
+### Step 3 — Test locally
+
+Before committing, verify your changes work:
+
+```bash
+# Start local server
+python3 -m http.server 8000
+```
+
+Open `http://localhost:8000` and test the full flow (Setup → Practice → Complete). Stop the server with `Ctrl+C` when done.
+
+### Step 4 — Commit and push the feature branch
+
+```bash
+# Stage your changes
+git add -A
+
+# Commit with a descriptive message
+git commit -m "feat: describe what you changed"
+
+# Push the feature branch to GitHub
+git push -u origin feature/your-feature-name
+```
+
+### Step 5 — Create a Pull Request on GitHub
+
+1. Go to your repository on GitHub.
+2. You'll see a banner: **"feature/your-feature-name had recent pushes"** → Click **Compare & pull request**.
+3. Fill in:
+   - **Title**: Brief description of the change.
+   - **Description**: What was changed and why.
+4. Click **Create pull request**.
+
+### Step 6 — Review and merge
+
+1. Review the **Files changed** tab on the PR to verify your changes.
+2. If everything looks good, click **Merge pull request** → **Confirm merge**.
+3. This merges your feature branch into `main`.
+
+> **Important:** GitHub Pages deploys from `main`. Your changes go live only after the merge.
+
+### Step 7 — Clean up the feature branch
+
+After merging, delete the feature branch to keep things tidy:
+
+**On GitHub:**
+- Click **Delete branch** on the merged PR page.
+
+**Locally:**
+```bash
+# Switch back to main
+git checkout main
+
+# Pull the merged changes
+git pull origin main
+
+# Delete the local feature branch
+git branch -d feature/your-feature-name
+```
+
+### Step 8 — Verify deployment
+
+1. Wait 1–2 minutes after merge.
+2. Open your GitHub Pages URL: `https://<username>.github.io/MemoryTool/`
+3. Hard-refresh (`Cmd+Shift+R` on Mac) to bypass cache.
+4. Confirm your changes are live.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -138,6 +279,8 @@ GitHub Pages will automatically rebuild and deploy within 1–2 minutes.
 | `Architecture.md` | Architecture and component design |
 | `SETUP.md` | This guide |
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Troubleshooting
@@ -148,3 +291,7 @@ GitHub Pages will automatically rebuild and deploy within 1–2 minutes.
 | Styles not loading | Make sure `style.css` is in the same folder as `index.html`. Check browser console for 404s. |
 | Custom blocks not showing | Select the "Custom" radio button — the section only appears in Custom mode. |
 | "List size must be between 1 and 10" error | Enter a whole number from 1 to 10 in the List Size field. |
+| Feature branch changes not showing on live site | Only `main` is deployed. Make sure you merged your PR into `main`. |
+| Old version still showing after deploy | Hard-refresh the browser (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows). |
+
+[↑ Back to Top](#table-of-contents)
