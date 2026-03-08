@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== SETUP SCREEN ===================== -->
+  <div id="setup-screen" class="screen">
+    <h1>Memory Tool</h1>
+    <p class="subtitle">Memorize ordered lists through structured repetition</p>
+
+    <div class="card">
+      <!-- Mode Selection -->
+      <fieldset class="form-group">
+        <legend>Mode</legend>
+        <label class="radio-label">
+          <input type="radio" name="mode" value="memorization" checked>
+          <span>Memorization</span>
+          <small>10 Straight → 5 Reverse → 10 Jumbled → 5 Straight</small>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="mode" value="revision">
+          <span>Revision</span>
+          <small>5 Straight → 3 Reverse → 5 Jumbled → 3 Straight</small>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="mode" value="custom">
+          <span>Custom</span>
+          <small>Define your own practice blocks</small>
+        </label>
+      </fieldset>
+
+      <!-- List Size -->
+      <div class="form-group">
+        <label for="list-size">List Size <small>(1–10)</small></label>
+        <input type="number" id="list-size" min="1" max="10" value="5">
+      </div>
+
+      <!-- Custom Blocks (hidden unless Custom mode) -->
+      <div id="custom-section" class="custom-section hidden">
+        <h3>Practice Blocks</h3>
+        <div id="custom-blocks"></div>
+        <button type="button" id="add-block-btn" class="btn btn-secondary">+ Add Block</button>
+      </div>
+
+      <!-- Error Message -->
+      <div id="error-message" class="error-message hidden"></div>
+
+      <!-- Start Button -->
+      <button type="button" id="start-btn" class="btn btn-primary">Start</button>
+    </div>
+  </div>
+
+  <!-- ===================== PRACTICE SCREEN ===================== -->
+  <div id="practice-screen" class="screen hidden">
+    <div class="progress-bar-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+    <div class="practice-header">
+      <span id="block-info" class="block-info">Straight — Rep 1 of 10</span>
+      <span id="overall-progress" class="overall-progress">1 / 150</span>
+    </div>
+
+    <div class="pointer-container">
+      <div id="pointer-display" class="pointer-display" aria-live="polite">1</div>
+    </div>
+
+    <div class="practice-actions">
+      <button type="button" id="back-btn" class="btn btn-secondary">Back</button>
+      <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+    </div>
+  </div>
+
+  <!-- ===================== COMPLETE SCREEN ===================== -->
+  <div id="complete-screen" class="screen hidden">
+    <div class="card complete-card">
+      <h2>Session Complete!</h2>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" id="total-practiced">150</span>
+          <span class="stat-label">Pointers Practiced</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="blocks-completed">4</span>
+          <span class="stat-label">Blocks Completed</span>
+        </div>
+      </div>
+      <button type="button" id="again-btn" class="btn btn-primary">Practice Again</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

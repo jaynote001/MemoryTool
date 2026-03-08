@@ -1,0 +1,409 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+/* ===== Screens ===== */
+.screen {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== Setup Screen ===== */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 1.5rem;
+  color: #16213e;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Form Elements ===== */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #16213e;
+}
+
+.form-group > label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #16213e;
+}
+
+.form-group > label small {
+  font-weight: 400;
+  color: #888;
+}
+
+.radio-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.radio-label:hover {
+  border-color: #a0c4ff;
+}
+
+.radio-label input[type="radio"] {
+  accent-color: #2563eb;
+  width: 18px;
+  height: 18px;
+}
+
+.radio-label span {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.radio-label small {
+  width: 100%;
+  padding-left: 2rem;
+  color: #777;
+  font-size: 0.8rem;
+}
+
+.radio-label:has(input:checked) {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ===== Custom Section ===== */
+.custom-section {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: #f8f9fc;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.custom-section h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: #16213e;
+}
+
+.block-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.block-row select {
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #fff;
+}
+
+.block-row select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.block-row input[type="number"] {
+  width: 70px;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.block-row .block-label {
+  font-size: 0.8rem;
+  color: #666;
+  min-width: 1.5rem;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.btn-remove:hover {
+  background: #fef2f2;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  min-height: 48px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+#add-block-btn {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+/* ===== Error ===== */
+.error-message {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  border: 1px solid #fecaca;
+}
+
+/* ===== Practice Screen ===== */
+#practice-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 2rem);
+  max-width: 100%;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.practice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.block-info {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #16213e;
+}
+
+.overall-progress {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.pointer-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pointer-display {
+  font-size: 8rem;
+  font-weight: 700;
+  color: #2563eb;
+  user-select: none;
+  line-height: 1;
+}
+
+.practice-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.practice-actions .btn {
+  flex: 1;
+}
+
+.practice-actions .btn-secondary {
+  flex: 0 0 auto;
+  min-width: 100px;
+}
+
+.practice-actions .btn-primary {
+  flex: 1;
+}
+
+/* ===== Complete Screen ===== */
+#complete-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 2rem);
+}
+
+.complete-card {
+  text-align: center;
+}
+
+.complete-card h2 {
+  font-size: 1.75rem;
+  color: #16213e;
+  margin-bottom: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .pointer-display {
+    font-size: 5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .stats {
+    gap: 1rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .pointer-display {
+    font-size: 4rem;
+  }
+
+  .block-row {
+    flex-wrap: wrap;
+  }
+
+  .block-row select {
+    flex: 1 1 100%;
+  }
+
+  .practice-actions {
+    flex-direction: column;
+  }
+
+  .practice-actions .btn-secondary {
+    min-width: auto;
+  }
+}
