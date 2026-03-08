@@ -250,8 +250,11 @@ input[type="number"]:focus {
 #practice-screen {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 2rem);
-  max-width: 100%;
+  justify-content: center;
+  height: calc(75vh - 1.5rem);
+  min-height: 0;
+  max-width: 50%;
+  margin: auto;
 }
 
 .progress-bar-container {
@@ -309,19 +312,23 @@ input[type="number"]:focus {
   display: flex;
   gap: 1rem;
   padding: 1rem 0;
+  justify-content: center;
 }
 
 .practice-actions .btn {
-  flex: 1;
+  min-height: 144px;
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
+  font-size: 1.25rem;
 }
 
 .practice-actions .btn-secondary {
-  flex: 0 0 auto;
-  min-width: 100px;
+  flex: 1;
+  min-width: 0;
 }
 
 .practice-actions .btn-primary {
-  flex: 1;
+  flex: 2;
 }
 
 /* ===== Complete Screen ===== */
@@ -405,5 +412,6 @@ input[type="number"]:focus {
 
   .practice-actions .btn-secondary {
     min-width: auto;
+    flex: 0;
   }
 }
