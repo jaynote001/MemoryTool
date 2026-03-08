@@ -37,7 +37,14 @@ A step-by-step guide to run the Memory Tool locally and deploy it to GitHub Page
 |------|---------|---------|
 | **Git** | Version control | [git-scm.com](https://git-scm.com/) |
 | **GitHub account** | Hosting via GitHub Pages | [github.com](https://github.com/) |
+| **Python 3** | Local server & live reload | Pre-installed on macOS |
 | **Web browser** | Running the app | Chrome, Firefox, Safari, or Edge |
+
+Install the `livereload` Python package (one-time setup):
+
+```bash
+pip install livereload
+```
 
 No Node.js, npm, or build tools are required — the project is plain HTML/CSS/JS.
 
@@ -57,16 +64,22 @@ cd /Users/singhpc/Projects/LearningTools/MemoryTool
 
 Pick **any one** of the options below:
 
-**Option A — Python (macOS comes with Python pre-installed):**
+**Option A — Python `livereload` (recommended — auto-refreshes on file save):**
+```bash
+livereload -p 8000 .
+```
+> The browser automatically reloads whenever you save changes to any file in the project.
+
+**Option B — Python built-in server (no auto-reload):**
 ```bash
 python3 -m http.server 8000
 ```
 
-**Option B — VS Code Live Server extension:**
+**Option C — VS Code Live Server extension:**
 1. Install the "Live Server" extension in VS Code.
 2. Right-click `index.html` → **Open with Live Server**.
 
-**Option C — Open file directly:**
+**Option D — Open file directly:**
 ```bash
 open index.html
 ```
@@ -201,11 +214,11 @@ Edit the relevant files (`index.html`, `style.css`, `app.js`, etc.) as needed.
 Before committing, verify your changes work:
 
 ```bash
-# Start local server
-python3 -m http.server 8000
+# Start local server with auto-reload
+livereload -p 8000 .
 ```
 
-Open `http://localhost:8000` and test the full flow (Setup → Practice → Complete). Stop the server with `Ctrl+C` when done.
+Open `http://localhost:8000` and test the full flow (Setup → Practice → Complete). The browser will auto-refresh as you save changes. Stop the server with `Ctrl+C` when done.
 
 ### Step 4 — Commit and push the feature branch
 
