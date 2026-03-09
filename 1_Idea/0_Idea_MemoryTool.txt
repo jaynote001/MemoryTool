@@ -1,0 +1,9 @@
+I want to create a Combined tool to test both List Memorization as well as Map Memorizatoin.
+
+They will appear as tabs on the main screen. User can select each tab and then Practise is generated accordingly.
+
+Idea for List Memorization Tool is mentioned in File 1.1_Idea_List_Memorization.txt
+Idea for Map Memorization Tool is mentioned in File 1.2_Idea_Map_Memorization.txt
+
+This tools I want to host on something like Github which can be easily accessible on laptop, mobile etc.
+I want to host this tool on Github Pages.

@@ -8,89 +8,205 @@
 </head>
 <body>
 
-  <!-- ===================== SETUP SCREEN ===================== -->
-  <div id="setup-screen" class="screen">
-    <h1>Memory Tool</h1>
-    <p class="subtitle">Memorize ordered lists through structured repetition</p>
+  <h1>Memory Tool</h1>
 
-    <div class="card">
-      <!-- Mode Selection -->
-      <fieldset class="form-group">
-        <legend>Mode</legend>
-        <label class="radio-label">
-          <input type="radio" name="mode" value="memorization" checked>
-          <span>Memorization</span>
-          <small>10 Straight → 5 Reverse → 10 Jumbled → 5 Straight</small>
-        </label>
-        <label class="radio-label">
-          <input type="radio" name="mode" value="revision">
-          <span>Revision</span>
-          <small>5 Straight → 3 Reverse → 5 Jumbled → 3 Straight</small>
-        </label>
-        <label class="radio-label">
-          <input type="radio" name="mode" value="custom">
-          <span>Custom</span>
-          <small>Define your own practice blocks</small>
-        </label>
-      </fieldset>
+  <!-- ===================== TAB NAVIGATION ===================== -->
+  <nav class="tab-nav">
+    <button type="button" class="tab-btn tab-active" data-tab="list">List</button>
+    <button type="button" class="tab-btn" data-tab="map">Map</button>
+  </nav>
 
-      <!-- List Size -->
-      <div class="form-group">
-        <label for="list-size">List Size <small>(1–10)</small></label>
-        <input type="number" id="list-size" min="1" max="10" value="5">
+  <!-- ===================== LIST TAB ===================== -->
+  <div id="list-tab" class="tab-content">
+
+    <!-- LIST SETUP SCREEN -->
+    <div id="list-setup-screen" class="screen">
+      <p class="subtitle">Memorize ordered lists through structured repetition</p>
+      <div class="card">
+        <!-- List Name -->
+        <div class="form-group">
+          <label for="list-name">List Name</label>
+          <input type="text" id="list-name" placeholder="e.g., Presidents of USA">
+        </div>
+
+        <!-- Mode Selection -->
+        <fieldset class="form-group">
+          <legend>Mode</legend>
+          <label class="radio-label">
+            <input type="radio" name="list-mode" value="memorization" checked>
+            <span>Memorization</span>
+            <small>10 Straight → 5 Reverse → 10 Jumbled → 5 Straight</small>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="list-mode" value="revision">
+            <span>Revision</span>
+            <small>5 Straight → 3 Reverse → 5 Jumbled → 3 Straight</small>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="list-mode" value="custom">
+            <span>Custom</span>
+            <small>Define your own practice blocks</small>
+          </label>
+        </fieldset>
+
+        <!-- List Size -->
+        <div class="form-group">
+          <label for="list-size">List Size</label>
+          <input type="number" id="list-size" min="1" value="5">
+        </div>
+
+        <!-- Custom Blocks (hidden unless Custom mode) -->
+        <div id="list-custom-section" class="custom-section hidden">
+          <h3>Practice Blocks</h3>
+          <div id="list-custom-blocks"></div>
+          <button type="button" id="list-add-block-btn" class="btn btn-secondary">+ Add Block</button>
+        </div>
+
+        <!-- Error Message -->
+        <div id="list-error-message" class="error-message hidden"></div>
+
+        <!-- Start Button -->
+        <button type="button" id="list-start-btn" class="btn btn-primary">Start</button>
       </div>
-
-      <!-- Custom Blocks (hidden unless Custom mode) -->
-      <div id="custom-section" class="custom-section hidden">
-        <h3>Practice Blocks</h3>
-        <div id="custom-blocks"></div>
-        <button type="button" id="add-block-btn" class="btn btn-secondary">+ Add Block</button>
-      </div>
-
-      <!-- Error Message -->
-      <div id="error-message" class="error-message hidden"></div>
-
-      <!-- Start Button -->
-      <button type="button" id="start-btn" class="btn btn-primary">Start</button>
     </div>
+
+    <!-- LIST PRACTICE SCREEN -->
+    <div id="list-practice-screen" class="screen hidden">
+      <div class="progress-bar-container">
+        <div id="list-progress-bar" class="progress-bar"></div>
+      </div>
+      <div class="practice-header">
+        <span id="list-block-info" class="block-info">Straight — Rep 1 of 10</span>
+        <span id="list-overall-progress" class="overall-progress">1 / 150</span>
+      </div>
+
+      <div class="name-display" id="list-name-display"></div>
+
+      <div class="pointer-container">
+        <div id="list-pointer-display" class="pointer-display" aria-live="polite">1</div>
+      </div>
+
+      <div class="practice-actions">
+        <button type="button" id="list-back-btn" class="btn btn-secondary">Back</button>
+        <button type="button" id="list-next-btn" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+
+    <!-- LIST COMPLETE SCREEN -->
+    <div id="list-complete-screen" class="screen hidden">
+      <div class="card complete-card">
+        <h2>Session Complete!</h2>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value" id="list-total-practiced">0</span>
+            <span class="stat-label">Pointers Practiced</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="list-blocks-completed">0</span>
+            <span class="stat-label">Blocks Completed</span>
+          </div>
+        </div>
+        <button type="button" id="list-again-btn" class="btn btn-primary">Practice Again</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ===================== PRACTICE SCREEN ===================== -->
-  <div id="practice-screen" class="screen hidden">
-    <div class="progress-bar-container">
-      <div id="progress-bar" class="progress-bar"></div>
-    </div>
-    <div class="practice-header">
-      <span id="block-info" class="block-info">Straight — Rep 1 of 10</span>
-      <span id="overall-progress" class="overall-progress">1 / 150</span>
-    </div>
+  <!-- ===================== MAP TAB ===================== -->
+  <div id="map-tab" class="tab-content hidden">
 
-    <div class="pointer-container">
-      <div id="pointer-display" class="pointer-display" aria-live="polite">1</div>
-    </div>
-
-    <div class="practice-actions">
-      <button type="button" id="back-btn" class="btn btn-secondary">Back</button>
-      <button type="button" id="next-btn" class="btn btn-primary">Next</button>
-    </div>
-  </div>
-
-  <!-- ===================== COMPLETE SCREEN ===================== -->
-  <div id="complete-screen" class="screen hidden">
-    <div class="card complete-card">
-      <h2>Session Complete!</h2>
-      <div class="stats">
-        <div class="stat">
-          <span class="stat-value" id="total-practiced">150</span>
-          <span class="stat-label">Pointers Practiced</span>
+    <!-- MAP SETUP SCREEN -->
+    <div id="map-setup-screen" class="screen">
+      <p class="subtitle">Memorize key-value mappings through structured repetition</p>
+      <div class="card">
+        <!-- Mapping Name -->
+        <div class="form-group">
+          <label for="map-name">Mapping Name</label>
+          <input type="text" id="map-name" placeholder="e.g., Country → Capital">
         </div>
-        <div class="stat">
-          <span class="stat-value" id="blocks-completed">4</span>
-          <span class="stat-label">Blocks Completed</span>
+
+        <!-- Mode Selection -->
+        <fieldset class="form-group">
+          <legend>Mode</legend>
+          <label class="radio-label">
+            <input type="radio" name="map-mode" value="memorization" checked>
+            <span>Memorization</span>
+            <small>K2V: 10 Straight → 10 Jumbled → 5 Straight | V2K: same</small>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="map-mode" value="revision">
+            <span>Revision</span>
+            <small>K2V: 5 Straight → 5 Jumbled → 3 Straight | V2K: same</small>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="map-mode" value="custom">
+            <span>Custom</span>
+            <small>Define your own practice blocks</small>
+          </label>
+        </fieldset>
+
+        <!-- Key-Value Pairs -->
+        <div class="form-group">
+          <label>Key-Value Pairs</label>
+          <div id="map-pairs"></div>
+          <button type="button" id="map-add-pair-btn" class="btn btn-secondary">+ Add Pair</button>
         </div>
+
+        <!-- Custom Blocks (hidden unless Custom mode) -->
+        <div id="map-custom-section" class="custom-section hidden">
+          <h3>Practice Blocks</h3>
+          <div id="map-custom-blocks"></div>
+          <button type="button" id="map-add-block-btn" class="btn btn-secondary">+ Add Block</button>
+        </div>
+
+        <!-- Error Message -->
+        <div id="map-error-message" class="error-message hidden"></div>
+
+        <!-- Start Button -->
+        <button type="button" id="map-start-btn" class="btn btn-primary">Start</button>
       </div>
-      <button type="button" id="again-btn" class="btn btn-primary">Practice Again</button>
     </div>
+
+    <!-- MAP PRACTICE SCREEN -->
+    <div id="map-practice-screen" class="screen hidden">
+      <div class="progress-bar-container">
+        <div id="map-progress-bar" class="progress-bar"></div>
+      </div>
+      <div class="practice-header">
+        <span id="map-block-info" class="block-info">Straight K2V — Rep 1 of 10</span>
+        <span id="map-overall-progress" class="overall-progress">1 / 300</span>
+      </div>
+
+      <div class="name-display" id="map-name-display"></div>
+
+      <div class="pointer-container">
+        <div id="map-pointer-display" class="pointer-display" aria-live="polite">k1</div>
+      </div>
+
+      <div class="practice-actions">
+        <button type="button" id="map-back-btn" class="btn btn-secondary">Back</button>
+        <button type="button" id="map-next-btn" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+
+    <!-- MAP COMPLETE SCREEN -->
+    <div id="map-complete-screen" class="screen hidden">
+      <div class="card complete-card">
+        <h2>Session Complete!</h2>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value" id="map-total-practiced">0</span>
+            <span class="stat-label">Items Practiced</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="map-blocks-completed">0</span>
+            <span class="stat-label">Blocks Completed</span>
+          </div>
+        </div>
+        <button type="button" id="map-again-btn" class="btn btn-primary">Practice Again</button>
+      </div>
+    </div>
+
   </div>
 
   <script src="app.js"></script>

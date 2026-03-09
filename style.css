@@ -11,8 +11,8 @@ body {
   color: #1a1a2e;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   padding: 1rem;
 }
 
@@ -27,14 +27,64 @@ body {
   display: none !important;
 }
 
-/* ===== Setup Screen ===== */
+/* ===== Tab Navigation ===== */
 h1 {
   text-align: center;
   font-size: 2rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
   color: #16213e;
 }
 
+.tab-nav {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #666;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:first-child {
+  border-radius: 8px 0 0 8px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.tab-btn:last-child {
+  border-radius: 0 8px 8px 0;
+  border-left: 1px solid #e0e0e0;
+}
+
+.tab-btn.tab-active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.tab-btn.tab-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Setup Screen ===== */
 .subtitle {
   text-align: center;
   color: #666;
@@ -117,7 +167,8 @@ legend {
   background: #eff6ff;
 }
 
-input[type="number"] {
+input[type="number"],
+input[type="text"] {
   width: 100%;
   padding: 0.6rem 0.75rem;
   border: 2px solid #e0e0e0;
@@ -126,7 +177,8 @@ input[type="number"] {
   transition: border-color 0.2s;
 }
 
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="text"]:focus {
   outline: none;
   border-color: #2563eb;
 }
@@ -194,6 +246,26 @@ input[type="number"]:focus {
   background: #fef2f2;
 }
 
+/* ===== Key-Value Pair Rows ===== */
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pair-row input[type="text"] {
+  flex: 1;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.pair-arrow {
+  color: #666;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-block;
@@ -230,7 +302,9 @@ input[type="number"]:focus {
   background: #d1d5db;
 }
 
-#add-block-btn {
+#list-add-block-btn,
+#map-add-block-btn,
+#map-add-pair-btn {
   width: 100%;
   margin-top: 0.25rem;
 }
@@ -247,7 +321,8 @@ input[type="number"]:focus {
 }
 
 /* ===== Practice Screen ===== */
-#practice-screen {
+#list-practice-screen,
+#map-practice-screen {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -279,7 +354,7 @@ input[type="number"]:focus {
   justify-content: space-between;
   align-items: center;
   padding: 0 0.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .block-info {
@@ -291,6 +366,15 @@ input[type="number"]:focus {
 .overall-progress {
   font-size: 0.9rem;
   color: #666;
+}
+
+.name-display {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-style: italic;
 }
 
 .pointer-container {
@@ -332,7 +416,8 @@ input[type="number"]:focus {
 }
 
 /* ===== Complete Screen ===== */
-#complete-screen {
+#list-complete-screen,
+#map-complete-screen {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -376,6 +461,11 @@ input[type="number"]:focus {
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
+  #list-practice-screen,
+  #map-practice-screen {
+    max-width: 90%;
+  }
+
   .pointer-display {
     font-size: 5rem;
   }
@@ -403,6 +493,14 @@ input[type="number"]:focus {
   }
 
   .block-row select {
+    flex: 1 1 100%;
+  }
+
+  .pair-row {
+    flex-wrap: wrap;
+  }
+
+  .pair-row input[type="text"] {
     flex: 1 1 100%;
   }
 
