@@ -1,0 +1,22 @@
+I want to create a Tool which can help me to memorize Mapping like K->V where (k1-v11),(k2-v2),(k3-v3),...,(kn-vn) where ki is ith element of K which is key and vi is ith element of V which is value.
+
+I want Mapping name to be entered by User and should be displayed during the Practise Session.
+
+I want Practise Element to be of 6 types:
+1) Straight K2V : Tools ask you to name Value for a Specific Key. Keys are repeated in straight order k1-k2-k3-k1-k2-k3. Repetition is Input by the User.
+2) Straight V2K : Tools ask you to name Key for a Specific Value. Values are repeated in straight order v1-v2-v3-v1-v2-v3. Repetition is Input by the User.
+3) Reverse K2V : Tools ask you to name Value for a Specific Key. Keys are repeated in reverse order k3-k2-k1-k3-k2-k1. Repetition is Input by the User.
+4) Reverse V2K : Tools ask you to name Key for a Specific Value. Values are repeated in reverse order k3-k2-k1-k3-k2-k1. Repetition is Input by the User.
+5) Jumbled K2V : Tools ask you to name Value for a Specific Key. Keys are repeated in jumbled order k1-k3-k2-k3-k1-k2. Repetition is Input by the User.
+6) Jumbled V2K : Tools ask you to name Key for a Specific Value. Values are repeated in jumbled order k1-k3-k2-k3-k1-k2. Repetition is Input by the User.
+
+
+
+I want 3 Modes in which practise is done:
+1) Memorization (10 Straight K2V - 10 Jumbled K2V - 5 Straight K2V - 10 Straight V2K - 10 Jumbled V2K - 5 Straight V2K)
+2) Revision (5 Straight K2V - 5 Jumbled K2V - 3 Straight K2V - 5 Straight V2K - 5 Jumbled V2K - 3 Straight V2K)
+3) Custom (Will be selected by User to Enter Practise Element, Size and Repetition Count)
+
+
+Once I input the Mode, List Size and Specification in case of Custom.
+Tool should create the Practise ie Maping Pointer Count is displayed and when I click on Next Button, Maping Pointer Count get updated based the Mode/Practise Element.

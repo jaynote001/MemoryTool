@@ -88,8 +88,10 @@ open index.html
 ### Step 3 — Use the tool
 
 1. Open `http://localhost:8000` in your browser (if using Python server).
-2. Select a mode, enter list size, and click **Start**.
-3. Click **Next** to advance through the sequence.
+2. Choose the **List** or **Map** tab.
+3. **List tab:** Enter a List Name, select a mode, enter list size, and click **Start**.
+4. **Map tab:** Enter a Mapping Name, select a mode, add key-value pairs via **+ Add Pair**, and click **Start**.
+5. Click **Next** to advance through the sequence. Click **Back** to abort and return to setup.
 
 [↑ Back to Top](#table-of-contents)
 
@@ -119,7 +121,7 @@ git init
 git add index.html style.css app.js
 
 # Optionally add documentation files too
-git add 1_Idea.txt Requirements.md Architecture.md SETUP.md
+git add 1_Idea/ 2_Requirements/ 3_Architecture/ 4_SETUP.md
 
 # Commit
 git commit -m "Initial commit: Memory Tool v1"
@@ -284,13 +286,13 @@ git branch -d feature/your-feature-name
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Single HTML page with all three screens (Setup, Practice, Complete) |
-| `style.css` | All styles — responsive layout, theming, mobile support |
-| `app.js` | Application logic — session engine, sequence generation, UI control |
-| `1_Idea.txt` | Original idea description |
-| `Requirements.md` | Detailed requirements specification |
-| `Architecture.md` | Architecture and component design |
-| `SETUP.md` | This guide |
+| `index.html` | Single HTML page with List and Map tabs, each with Setup/Practice/Complete screens |
+| `style.css` | All styles — tab navigation, responsive layout, theming, mobile support |
+| `app.js` | Application logic — List & Map session engines, sequence generation, tab management, UI control |
+| `1_Idea/` | Idea documents (General, List, Map) |
+| `2_Requirements/` | Requirements documents (General, List, Map) |
+| `3_Architecture/` | Architecture documents (General, List, Map) |
+| `4_SETUP.md` | This guide |
 
 [↑ Back to Top](#table-of-contents)
 
@@ -303,7 +305,8 @@ git branch -d feature/your-feature-name
 | Page shows 404 on GitHub Pages | Wait 2–3 minutes after enabling Pages. Ensure `index.html` is in the repo root. |
 | Styles not loading | Make sure `style.css` is in the same folder as `index.html`. Check browser console for 404s. |
 | Custom blocks not showing | Select the "Custom" radio button — the section only appears in Custom mode. |
-| "List size must be between 1 and 10" error | Enter a whole number from 1 to 10 in the List Size field. |
+| "List size must be a valid positive number" error | Enter a whole number ≥ 1 in the List Size field. |
+| Map pairs not validating | Ensure every key and value field is filled in. Add at least one pair. |
 | Feature branch changes not showing on live site | Only `main` is deployed. Make sure you merged your PR into `main`. |
 | Old version still showing after deploy | Hard-refresh the browser (`Cmd+Shift+R` on Mac, `Ctrl+Shift+R` on Windows). |
 

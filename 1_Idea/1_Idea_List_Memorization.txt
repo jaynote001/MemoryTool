@@ -1,5 +1,7 @@
 I want to create a Tool which can help me to memorize.
-I want to first of all learn and practise simple list 1/2/3/4/5/6/7/8/9/10 pointers long.
+I want to first of all learn and practise simple list any Size pointers long.
+
+I want List name to be entered by User and should be displayed during the Practise Session.
 
 I want Practise Element to be of 3 types:
 1) Straight : Tools ask you to name List Pointer in Straight Order repeatedly like 1-2-3-1-2-3-1-2-3. Repetition is Input by the User.
@@ -14,5 +16,3 @@ I want 3 Modes in which practise is done:
 
 Once I input the Mode, List Size and Specification in case of Custom.
 Tool should create the Practise ie List Pointer Count is displayed and when I click on Next Button, List Pointer Count get updated based the Mode/Practise Element.
-
-This tools I want to host on something like Github which can be easily accessible on laptop, mobile etc.
