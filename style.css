@@ -309,6 +309,30 @@ input[type="text"]:focus {
   margin-top: 0.25rem;
 }
 
+/* ===== Import / Export ===== */
+.pair-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.pair-actions #map-add-pair-btn {
+  width: 100%;
+}
+
+.import-export-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.import-export-group .btn {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  min-height: 40px;
+}
+
 /* ===== Error ===== */
 .error-message {
   background: #fef2f2;

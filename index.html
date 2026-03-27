@@ -149,7 +149,14 @@
         <div class="form-group">
           <label>Key-Value Pairs</label>
           <div id="map-pairs"></div>
-          <button type="button" id="map-add-pair-btn" class="btn btn-secondary">+ Add Pair</button>
+          <div class="pair-actions">
+            <button type="button" id="map-add-pair-btn" class="btn btn-secondary">+ Add Pair</button>
+            <div class="import-export-group">
+              <button type="button" id="map-import-btn" class="btn btn-secondary">Import JSON</button>
+              <input type="file" id="map-import-file" accept=".json" class="hidden">
+              <button type="button" id="map-export-btn" class="btn btn-secondary">Export JSON</button>
+            </div>
+          </div>
         </div>
 
         <!-- Custom Blocks (hidden unless Custom mode) -->
