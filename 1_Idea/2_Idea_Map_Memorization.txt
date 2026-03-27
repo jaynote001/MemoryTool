@@ -20,3 +20,7 @@ I want 3 Modes in which practise is done:
 
 Once I input the Mode, List Size and Specification in case of Custom.
 Tool should create the Practise ie Maping Pointer Count is displayed and when I click on Next Button, Maping Pointer Count get updated based the Mode/Practise Element.
+
+Memory:
+I should be able to import a json file containing mappings and export the mappings as a json file.
+Sample Mappings has been defined in file mapping_sample.json

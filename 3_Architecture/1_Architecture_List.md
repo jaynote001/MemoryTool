@@ -1,6 +1,31 @@
 # Memory Tool — List Memorization Architecture
 
+> [← Architecture Index](INDEX.md) · [← README](../README.md)
+>
 > This document covers architecture specific to the **List Memorization** tab. For shared architecture, see [0_Architecture_General.md](0_Architecture_General.md).
+
+---
+
+## Document Index
+
+- [1. Overview](#1-overview)
+- [2. List-Specific Components](#2-list-specific-components)
+  - [2.1 Component Diagram](#21-component-diagram)
+  - [2.2 ListModeConfig](#22-listmodeconfig)
+  - [2.3 ListSessionEngine](#23-listsessionengine)
+  - [2.4 ListInputValidator](#24-listinputvalidator)
+- [3. List Setup Screen — HTML Structure](#3-list-setup-screen--html-structure)
+- [4. List Practice Screen — Display Logic](#4-list-practice-screen--display-logic)
+- [5. List Data Flow — Sequence Generation](#5-list-data-flow--sequence-generation)
+- [6. Traceability Matrix](#6-traceability-matrix)
+
+### Related Documents
+
+| Document | Link |
+|----------|------|
+| General Architecture | [0_Architecture_General.md](0_Architecture_General.md) |
+| Map Architecture | [2_Architecture_Map.md](2_Architecture_Map.md) |
+| List Requirements | [1_Requirements_List.md](../2_Requirements/1_Requirements_List.md) |
 
 ---
 
@@ -219,3 +244,5 @@ Maps List requirements to architectural components:
 | LFR-09 | UIController.showCompleteScreen("list"), `#list-complete-screen` |
 
 ---
+
+> [↑ Back to Document Index](#document-index) · [← Architecture Index](INDEX.md) · [← README](../README.md)

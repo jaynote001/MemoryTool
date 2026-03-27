@@ -1,6 +1,38 @@
 # Memory Tool — General Architecture
 
+> [← Architecture Index](INDEX.md) · [← README](../README.md)
+>
 > Shared architecture for the Memory Tool. Tab-specific details are in [1_Architecture_List.md](1_Architecture_List.md) and [2_Architecture_Map.md](2_Architecture_Map.md).
+
+---
+
+## Document Index
+
+- [1. System Architecture Overview](#1-system-architecture-overview)
+- [2. File Structure](#2-file-structure)
+- [3. Application Layers](#3-application-layers)
+- [4. Tab Architecture](#4-tab-architecture)
+  - [4.1 Tab Structure](#41-tab-structure)
+  - [4.2 Tab Switching Rules](#42-tab-switching-rules)
+- [5. Shared Component Design](#5-shared-component-design)
+  - [5.1 Component Diagram](#51-component-diagram)
+  - [5.2 SequenceGenerator](#52-sequencegenerator-shared)
+  - [5.3 TabManager](#53-tabmanager)
+  - [5.4 UIController](#54-uicontroller-shared)
+- [6. State Machine](#6-state-machine)
+- [7. Data Flow](#7-data-flow)
+  - [7.1 Setup → Practice Transition](#71-setup--practice-transition)
+  - [7.2 Next Button Press](#72-next-button-press-practice-loop)
+- [8. Sequence Generation Algorithm](#8-sequence-generation-algorithm)
+- [9. Technology Decisions](#9-technology-decisions)
+
+### Related Documents
+
+| Document | Link |
+|----------|------|
+| List Architecture | [1_Architecture_List.md](1_Architecture_List.md) |
+| Map Architecture | [2_Architecture_Map.md](2_Architecture_Map.md) |
+| General Requirements | [0_Requirements_General.md](../2_Requirements/0_Requirements_General.md) |
 
 ---
 
@@ -486,3 +518,5 @@ No network errors or server errors are possible since the app is fully client-si
 | Build tools | None | Zero-dependency static files. No bundling, transpiling, or minification required. |
 
 ---
+
+> [↑ Back to Document Index](#document-index) · [← Architecture Index](INDEX.md) · [← README](../README.md)
