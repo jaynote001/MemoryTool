@@ -1,0 +1,78 @@
+{
+    "List": {
+        "Memorization": [
+            {
+                "type": "Straight",
+                "repetitions": 10
+            },
+            {
+                "type": "Reverse",
+                "repetitions": 10
+            },
+            {
+                "type": "Jumbled",
+                "repetitions": 5
+            },
+            {
+                "type": "Straight",
+                "repetitions": 5
+            }
+        ],
+        "Revision": [
+            {
+                "type": "Straight",
+                "repetitions": 5
+            },
+            {
+                "type": "Reverse",
+                "repetitions": 3
+            },
+            {
+                "type": "Jumbled",
+                "repetitions": 5
+            },
+            {
+                "type": "Straight",
+                "repetitions": 3
+            }
+        ]
+    },
+    "Map": {
+        "Memorization": [
+            {
+                "type": "Straight",
+                "repetitions": 10
+            },
+            {
+                "type": "Reverse",
+                "repetitions": 10
+            },
+            {
+                "type": "Jumbled",
+                "repetitions": 5
+            },
+            {
+                "type": "Straight",
+                "repetitions": 5
+            }
+        ],
+        "Revision": [
+            {
+                "type": "Straight",
+                "repetitions": 5
+            },
+            {
+                "type": "Reverse",
+                "repetitions": 3
+            },
+            {
+                "type": "Jumbled",
+                "repetitions": 5
+            },
+            {
+                "type": "Straight",
+                "repetitions": 3
+            }
+        ]
+    }
+}

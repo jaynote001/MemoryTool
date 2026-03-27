@@ -46,8 +46,8 @@
   const ListModeConfig = {
     memorization: [
       { type: "straight", repetitions: 10 },
-      { type: "reverse",  repetitions: 5  },
-      { type: "jumbled",  repetitions: 10 },
+      { type: "reverse",  repetitions: 10 },
+      { type: "jumbled",  repetitions: 5  },
       { type: "straight", repetitions: 5  }
     ],
     revision: [
@@ -69,17 +69,21 @@
   const MapModeConfig = {
     memorization: [
       { type: "straight", direction: "K2V", repetitions: 10 },
-      { type: "jumbled",  direction: "K2V", repetitions: 10 },
+      { type: "reverse",  direction: "K2V", repetitions: 10 },
+      { type: "jumbled",  direction: "K2V", repetitions: 5  },
       { type: "straight", direction: "K2V", repetitions: 5  },
       { type: "straight", direction: "V2K", repetitions: 10 },
-      { type: "jumbled",  direction: "V2K", repetitions: 10 },
+      { type: "reverse",  direction: "V2K", repetitions: 10 },
+      { type: "jumbled",  direction: "V2K", repetitions: 5  },
       { type: "straight", direction: "V2K", repetitions: 5  }
     ],
     revision: [
       { type: "straight", direction: "K2V", repetitions: 5 },
+      { type: "reverse",  direction: "K2V", repetitions: 3 },
       { type: "jumbled",  direction: "K2V", repetitions: 5 },
       { type: "straight", direction: "K2V", repetitions: 3 },
       { type: "straight", direction: "V2K", repetitions: 5 },
+      { type: "reverse",  direction: "V2K", repetitions: 3 },
       { type: "jumbled",  direction: "V2K", repetitions: 5 },
       { type: "straight", direction: "V2K", repetitions: 3 }
     ],
@@ -438,6 +442,67 @@
     }
   };
 
+  // ───────────── Practice Config Loader ─────────────
+
+  const PractiseConfigLoader = {
+    buildListBlocks(jsonBlocks) {
+      return jsonBlocks.map(function (b) {
+        return { type: b.type.toLowerCase(), repetitions: b.repetitions };
+      });
+    },
+
+    buildMapBlocks(jsonBlocks) {
+      var blocks = [];
+      ["K2V", "V2K"].forEach(function (dir) {
+        jsonBlocks.forEach(function (b) {
+          blocks.push({ type: b.type.toLowerCase(), direction: dir, repetitions: b.repetitions });
+        });
+      });
+      return blocks;
+    },
+
+    buildDescription(jsonBlocks) {
+      return jsonBlocks.map(function (b) {
+        return b.repetitions + " " + b.type;
+      }).join(" → ");
+    },
+
+    load() {
+      var self = this;
+      fetch("practise_config.json")
+        .then(function (response) {
+          if (!response.ok) throw new Error("Failed to load config");
+          return response.json();
+        })
+        .then(function (config) {
+          if (config.List) {
+            if (config.List.Memorization) {
+              ListModeConfig.memorization = self.buildListBlocks(config.List.Memorization);
+              dom.listModeMemDesc.textContent = self.buildDescription(config.List.Memorization);
+            }
+            if (config.List.Revision) {
+              ListModeConfig.revision = self.buildListBlocks(config.List.Revision);
+              dom.listModeRevDesc.textContent = self.buildDescription(config.List.Revision);
+            }
+          }
+
+          if (config.Map) {
+            if (config.Map.Memorization) {
+              MapModeConfig.memorization = self.buildMapBlocks(config.Map.Memorization);
+              dom.mapModeMemDesc.textContent = "K2V: " + self.buildDescription(config.Map.Memorization) + " | V2K: same";
+            }
+            if (config.Map.Revision) {
+              MapModeConfig.revision = self.buildMapBlocks(config.Map.Revision);
+              dom.mapModeRevDesc.textContent = "K2V: " + self.buildDescription(config.Map.Revision) + " | V2K: same";
+            }
+          }
+        })
+        .catch(function (err) {
+          console.warn("PractiseConfigLoader: Using hardcoded defaults.", err.message);
+        });
+    }
+  };
+
   // ───────────── DOM References ─────────────
 
   var dom = {
@@ -502,7 +567,13 @@
     // Map complete
     mapTotalPracticed:    document.getElementById("map-total-practiced"),
     mapBlocksCompleted:   document.getElementById("map-blocks-completed"),
-    mapAgainBtn:          document.getElementById("map-again-btn")
+    mapAgainBtn:          document.getElementById("map-again-btn"),
+
+    // Mode descriptions
+    listModeMemDesc:      document.getElementById("list-mode-memorization-desc"),
+    listModeRevDesc:      document.getElementById("list-mode-revision-desc"),
+    mapModeMemDesc:       document.getElementById("map-mode-memorization-desc"),
+    mapModeRevDesc:       document.getElementById("map-mode-revision-desc")
   };
 
   // ───────────── Tab Manager ─────────────
@@ -1022,5 +1093,9 @@
 
     MapDataIO.exportJSON(mapName, pairs);
   });
+
+  // ───────────── Load Practice Config ─────────────
+
+  PractiseConfigLoader.load();
 
 })();
