@@ -25,7 +25,11 @@
   - [5.1 Setup Screen](#51-setup-screen)
   - [5.2 Practice Screen](#52-practice-screen)
   - [5.3 Completion Screen](#53-completion-screen)
-- [6. User Interface Wireframe](#6-user-interface-wireframe-text)
+- [6. Import / Export](#6-import--export)
+  - [6.1 JSON Format](#61-json-format)
+  - [6.2 Import Requirements](#62-import-requirements)
+  - [6.3 Export Requirements](#63-export-requirements)
+- [7. User Interface Wireframe](#7-user-interface-wireframe-text)
 
 ### Related Documents
 
@@ -53,6 +57,7 @@ The Map Memorization tab helps users learn and retain key-value mappings (K→V)
 | **Map Size** | The total number of key-value pairs (user-selected, 1–10). |
 | **K2V (Key-to-Value)** | Practice direction where a key is displayed and the user recalls the value. |
 | **V2K (Value-to-Key)** | Practice direction where a value is displayed and the user recalls the key. |
+| **Mapping JSON** | A JSON file containing a mapping name and an array of key-value pairs, used for import and export. |
 
 ---
 
@@ -176,7 +181,58 @@ Full user control over the practice session:
 
 ---
 
-## 6. User Interface Wireframe (Text)
+## 6. Import / Export
+
+The Map tab supports importing and exporting key-value mappings as JSON files. This allows users to save their mappings for reuse and share them across devices or sessions.
+
+### 6.1 JSON Format
+
+The JSON file shall follow this structure:
+
+```json
+{
+    "mapping_name": "sample_mapping",
+    "mappings": [
+        {
+            "source": "source_field_1",
+            "target": "target_field_1"
+        },
+        {
+            "source": "source_field_2",
+            "target": "target_field_2"
+        }
+    ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `mapping_name` | String | The name of the mapping (populates the Mapping Name field on import). |
+| `mappings` | Array | Array of key-value pair objects. |
+| `mappings[].source` | String | The key in a key-value pair. |
+| `mappings[].target` | String | The value in a key-value pair. |
+
+### 6.2 Import Requirements
+
+| ID | Requirement |
+|----|------------|
+| MFR-12 | The setup screen shall display an **Import JSON** button. |
+| MFR-13 | Clicking Import JSON shall open the browser's native file picker, filtered to `.json` files. |
+| MFR-14 | On successful import, the tool shall populate the **Mapping Name** field from `mapping_name` and create key-value pair rows from the `mappings` array (`source` → Key, `target` → Value). |
+| MFR-15 | If the file is not valid JSON or does not match the expected schema, the tool shall display an error message and not modify the current form state. |
+| MFR-16 | Importing shall **replace** any existing mapping name and pair rows on the setup screen. |
+
+### 6.3 Export Requirements
+
+| ID | Requirement |
+|----|------------|
+| MFR-17 | The setup screen shall display an **Export JSON** button. |
+| MFR-18 | Clicking Export JSON shall generate a JSON file from the current Mapping Name and key-value pair rows, and trigger a browser download with filename `<mapping_name>.json`. |
+| MFR-19 | The Export button shall be disabled (or show an error) if the Mapping Name is empty or no key-value pairs are defined. |
+
+---
+
+## 7. User Interface Wireframe (Text)
 
 ```
 ┌─────────────────────────────────────┐
@@ -186,11 +242,18 @@ Full user control over the practice session:
 │                                     │
 │  Mapping Name: [ ____________ ]     │
 │                                     │
+│  [ Import JSON ]   [ Export JSON ]  │
+│                                     │
 │  Mode:  (●) Memorization            │
 │         ( ) Revision                │
 │         ( ) Custom                  │
 │                                     │
-│  Map Size:  [ 5 ]  (1–10)          │
+│  Key-Value Pairs:                   │
+│  ┌───────────────────────────────┐  │
+│  │ [key1] → [value1]        [✕] │  │
+│  │ [key2] → [value2]        [✕] │  │
+│  │        [+ Add Pair]          │  │
+│  └───────────────────────────────┘  │
 │                                     │
 │  ┌─── Custom Only ───────────────┐  │
 │  │ Block 1: [Straight K2V ▼] x[3]│  │

@@ -185,7 +185,8 @@ The tool uses a tab-based UI where each tab encapsulates its own independent flo
 │  │ ListModeConfig       │  │ MapModeConfig                    │  │
 │  │ ListSessionEngine    │  │ MapSessionEngine                 │  │
 │  │ ListInputValidator   │  │ MapInputValidator                │  │
-│  └──────────────────────┘  └──────────────────────────────────┘  │
+│  └──────────────────────┘  │ MapDataIO                        │  │
+│                            └──────────────────────────────────┘  │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
@@ -515,6 +516,7 @@ No network errors or server errors are possible since the app is fully client-si
 | Module system | None (single script) | Avoids build tooling. IIFE or simple object namespacing keeps code organized. |
 | Randomization | `Math.random()` | Sufficient for non-security shuffle. No crypto-grade randomness needed. |
 | State management | Plain JS objects | No reactive framework needed. Direct DOM updates after state changes. Separate state per tab. |
+| File I/O | Browser File API + Blob/URL API | Import via `FileReader.readAsText()`, export via `Blob` + `URL.createObjectURL()`. No server needed. |
 | Build tools | None | Zero-dependency static files. No bundling, transpiling, or minification required. |
 
 ---

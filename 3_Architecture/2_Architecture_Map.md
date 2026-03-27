@@ -14,6 +14,7 @@
   - [2.2 MapModeConfig](#22-mapmodeconfig)
   - [2.3 MapSessionEngine](#23-mapsessionengine)
   - [2.4 MapInputValidator](#24-mapinputvalidator)
+  - [2.5 MapDataIO](#25-mapdataio)
 - [3. Map Setup Screen — HTML Structure](#3-map-setup-screen--html-structure)
   - [3.1 Key-Value Pair Input](#31-key-value-pair-input)
 - [4. Map Practice Screen — Display Logic](#4-map-practice-screen--display-logic)
@@ -34,7 +35,7 @@
 
 ## 1. Overview
 
-The Map tab allows users to practice memorizing key-value mappings by presenting either a key (for K2V practice) or a value (for V2K practice) one at a time. The user enters a Mapping Name and key-value pairs via an add-button interface, selects a mode, and the tool drives a sequence of item presentations through the practice session.
+The Map tab allows users to practice memorizing key-value mappings by presenting either a key (for K2V practice) or a value (for V2K practice) one at a time. The user enters a Mapping Name and key-value pairs via an add-button interface (or imports them from a JSON file), selects a mode, and the tool drives a sequence of item presentations through the practice session. Mappings can also be exported as JSON for reuse across sessions and devices.
 
 ---
 
@@ -67,6 +68,14 @@ The Map tab allows users to practice memorizing key-value mappings by presenting
 │  │ MapInputValidator│      │                               │  │
 │  │                  │─────►│                               │  │
 │  │ + validate(form) │      └───────────────────────────────┘  │
+│  └──────────────────┘                                         │
+│                                                              │
+│  ┌──────────────────┐                                         │
+│  │ MapDataIO        │  (Import / Export)                      │
+│  │                  │                                         │
+│  │ + importJSON(f)  │  Reads JSON file → populates form       │
+│  │ + exportJSON(n,p)│  Reads form → triggers JSON download    │
+│  │ + validateSchema │  Validates imported JSON structure       │
 │  └──────────────────┘                                         │
 └───────────────────────────────────────────────────────────────┘
 ```
@@ -149,6 +158,79 @@ Validates user input from the Map setup screen.
 | Custom Blocks | At least 1 block defined | "Add at least one practice block." |
 | Practice Element | Must be a valid type+direction combo | "Invalid practice element type." |
 
+### 2.5 MapDataIO
+
+Handles importing and exporting key-value mappings as JSON files. Operates entirely client-side using the browser File API (for import) and Blob/URL API (for export).
+
+**JSON Schema:**
+```json
+{
+    "mapping_name": "<string>",
+    "mappings": [
+        { "source": "<string>", "target": "<string>" }
+    ]
+}
+```
+
+**Methods:**
+
+| Method | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `importJSON(file)` | `File` object from `<input type="file">` | `{ name, pairs }` or error | Reads file via `FileReader`, parses JSON, validates schema, returns mapping name and pairs array. |
+| `exportJSON(name, pairs)` | Mapping name `String`, pairs `Array<{key, value}>` | Triggers browser download | Constructs JSON object, creates a `Blob`, generates an object URL, and triggers download as `<mapping_name>.json`. |
+| `validateSchema(data)` | Parsed JSON object | `true` or throws error | Checks: `mapping_name` is a non-empty string, `mappings` is a non-empty array, each entry has non-empty `source` and `target` strings. |
+
+**Import Flow:**
+```
+[Import JSON clicked]
+      │
+      ▼
+Browser file picker (accept=".json")
+      │
+      ▼
+FileReader.readAsText(file)
+      │
+      ▼
+JSON.parse(text)
+      │
+      ├──► Parse error → showError("Invalid JSON file.")
+      │
+      ▼
+validateSchema(data)
+      │
+      ├──► Schema error → showError("JSON does not match expected format.")
+      │
+      ▼
+Populate form:
+  - Set Mapping Name = data.mapping_name
+  - Clear existing pair rows
+  - For each mapping: add pair row (source → Key, target → Value)
+```
+
+**Export Flow:**
+```
+[Export JSON clicked]
+      │
+      ▼
+Read Mapping Name and pair rows from DOM
+      │
+      ├──► Name empty or no pairs → showError("Nothing to export.")
+      │
+      ▼
+Build JSON object:
+  { mapping_name, mappings: [{ source: key, target: value }, ...] }
+      │
+      ▼
+const blob = new Blob([JSON.stringify(data, null, 4)], { type: "application/json" })
+const url = URL.createObjectURL(blob)
+      │
+      ▼
+Create temporary <a> element, set href=url, download="<mapping_name>.json"
+      │
+      ▼
+Programmatically click <a>, then revoke object URL
+```
+
 ---
 
 ## 3. Map Setup Screen — HTML Structure
@@ -191,7 +273,23 @@ Validates user input from the Map setup screen.
 </div>
 ```
 
-### 3.1 Key-Value Pair Input
+### 3.1 Import / Export Buttons
+
+Placed below the Mapping Name field on the setup screen:
+
+```html
+<div class="form-group import-export-group">
+  <button id="map-import-btn" class="btn btn-secondary">Import JSON</button>
+  <input type="file" id="map-import-file" accept=".json" class="hidden">
+  <button id="map-export-btn" class="btn btn-secondary">Export JSON</button>
+</div>
+```
+
+- The `<input type="file">` is hidden; clicking "Import JSON" programmatically triggers it.
+- The `accept=".json"` attribute filters the file picker to JSON files.
+- Export reads the current form state and triggers a download.
+
+### 3.2 Key-Value Pair Input
 
 Users add pairs one at a time via the "+ Add Pair" button. Each pair row:
 
@@ -344,6 +442,14 @@ Maps Map requirements to architectural components:
 | MFR-09 | UIController.updateProgress("map", info), MapSessionEngine.getProgress() |
 | MFR-10 | SequenceGenerator + MapSessionEngine.next() with direction-aware resolution |
 | MFR-11 | UIController.showCompleteScreen("map"), `#map-complete-screen` |
+| MFR-12 | index.html `#map-import-btn`, MapDataIO |
+| MFR-13 | index.html `#map-import-file` (hidden `<input type="file">`), MapDataIO.importJSON() |
+| MFR-14 | MapDataIO.importJSON() → populates `#map-name` and `#map-pairs` |
+| MFR-15 | MapDataIO.validateSchema(), UIController.showError("map", msg) |
+| MFR-16 | MapDataIO.importJSON() clears existing rows before populating |
+| MFR-17 | index.html `#map-export-btn`, MapDataIO |
+| MFR-18 | MapDataIO.exportJSON(name, pairs) → Blob + download trigger |
+| MFR-19 | MapDataIO.exportJSON() pre-check, UIController.showError("map", msg) |
 
 ---
 
