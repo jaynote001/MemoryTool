@@ -10,7 +10,7 @@
 |---|----------|-------------|
 | 0 | [General Architecture](0_Architecture_General.md) | Shared architecture — SPA overview, file structure, MVC layers, tab architecture, shared components (SequenceGenerator, TabManager, UIController), state machine, data flow, sequence generation algorithm |
 | 1 | [List Memorization Architecture](1_Architecture_List.md) | List tab — ListSessionEngine, ListModeConfig, ListInputValidator, HTML structure, display logic, data flow, traceability matrix |
-| 2 | [Map Memorization Architecture](2_Architecture_Map.md) | Map tab — MapSessionEngine, MapModeConfig, MapInputValidator, key-value pair input, K2V/V2K display logic, data flow, custom mode element types |
+| 2 | [Map Memorization Architecture](2_Architecture_Map.md) | Map tab — MapSessionEngine, MapModeConfig, MapInputValidator, MapDataIO (JSON import/export), key-value pair input, K2V/V2K display logic, data flow, custom mode element types |
 
 ---
 
@@ -39,6 +39,7 @@
 | `ListModeConfig` | `MapModeConfig` |
 | `ListSessionEngine` | `MapSessionEngine` |
 | `ListInputValidator` | `MapInputValidator` |
+| | `MapDataIO` |
 
 ---
 

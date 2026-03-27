@@ -363,6 +363,81 @@
     }
   };
 
+  // ───────────── Map Data IO (Import / Export) ─────────────
+
+  const MapDataIO = {
+    validateSchema(data) {
+      if (!data || typeof data !== "object") {
+        return "Invalid JSON structure.";
+      }
+      if (typeof data.mapping_name !== "string" || data.mapping_name.trim() === "") {
+        return "JSON must contain a non-empty 'mapping_name' string.";
+      }
+      if (!Array.isArray(data.mappings) || data.mappings.length === 0) {
+        return "JSON must contain a non-empty 'mappings' array.";
+      }
+      for (var i = 0; i < data.mappings.length; i++) {
+        var m = data.mappings[i];
+        if (typeof m.source !== "string" || m.source.trim() === "") {
+          return "Mapping " + (i + 1) + ": 'source' must be a non-empty string.";
+        }
+        if (typeof m.target !== "string" || m.target.trim() === "") {
+          return "Mapping " + (i + 1) + ": 'target' must be a non-empty string.";
+        }
+      }
+      return null;
+    },
+
+    importJSON(file, onSuccess, onError) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var data;
+        try {
+          data = JSON.parse(e.target.result);
+        } catch (_) {
+          onError("Invalid JSON file.");
+          return;
+        }
+
+        var schemaError = MapDataIO.validateSchema(data);
+        if (schemaError) {
+          onError(schemaError);
+          return;
+        }
+
+        onSuccess({
+          name: data.mapping_name,
+          pairs: data.mappings.map(function (m) {
+            return { key: m.source, value: m.target };
+          })
+        });
+      };
+      reader.onerror = function () {
+        onError("Failed to read the file.");
+      };
+      reader.readAsText(file);
+    },
+
+    exportJSON(name, pairs) {
+      var data = {
+        mapping_name: name,
+        mappings: pairs.map(function (p) {
+          return { source: p.key, target: p.value };
+        })
+      };
+      var json = JSON.stringify(data, null, 4);
+      var blob = new Blob([json], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = (name.replace(/[^a-zA-Z0-9_-]/g, "_") || "mapping") + ".json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  };
+
   // ───────────── DOM References ─────────────
 
   var dom = {
@@ -406,6 +481,9 @@
     mapModeRadios:        document.querySelectorAll('input[name="map-mode"]'),
     mapPairs:             document.getElementById("map-pairs"),
     mapAddPairBtn:        document.getElementById("map-add-pair-btn"),
+    mapImportBtn:         document.getElementById("map-import-btn"),
+    mapImportFile:        document.getElementById("map-import-file"),
+    mapExportBtn:         document.getElementById("map-export-btn"),
     mapCustomSection:     document.getElementById("map-custom-section"),
     mapCustomBlocks:      document.getElementById("map-custom-blocks"),
     mapAddBlockBtn:       document.getElementById("map-add-block-btn"),
@@ -670,7 +748,7 @@
       return blocks;
     },
 
-    addMapPairRow() {
+    addMapPairRow(prefillKey, prefillValue) {
       var row = document.createElement("div");
       row.className = "pair-row";
       row.innerHTML =
@@ -678,6 +756,9 @@
         '<span class="pair-arrow">→</span>' +
         '<input type="text" class="pair-value" placeholder="Value">' +
         '<button type="button" class="btn-remove" title="Remove pair">✕</button>';
+
+      if (prefillKey !== undefined)  row.querySelector(".pair-key").value = prefillKey;
+      if (prefillValue !== undefined) row.querySelector(".pair-value").value = prefillValue;
 
       row.querySelector(".btn-remove").addEventListener("click", function () {
         row.remove();
@@ -887,6 +968,59 @@
   dom.mapAgainBtn.addEventListener("click", function () {
     MapSessionEngine.reset();
     UIController.showMapSetupScreen();
+  });
+
+  // ───────────── Event Handlers: Map Import / Export ─────────────
+
+  // Import JSON button — trigger hidden file input
+  dom.mapImportBtn.addEventListener("click", function () {
+    UIController.hideMapError();
+    dom.mapImportFile.value = "";
+    dom.mapImportFile.click();
+  });
+
+  // File selected — read and populate form
+  dom.mapImportFile.addEventListener("change", function () {
+    var file = this.files[0];
+    if (!file) return;
+
+    MapDataIO.importJSON(file,
+      function onSuccess(result) {
+        // Set mapping name
+        dom.mapNameInput.value = result.name;
+
+        // Clear existing pair rows
+        dom.mapPairs.innerHTML = "";
+
+        // Add pair rows from imported data
+        result.pairs.forEach(function (pair) {
+          UIController.addMapPairRow(pair.key, pair.value);
+        });
+
+        UIController.hideMapError();
+      },
+      function onError(msg) {
+        UIController.showMapError(msg);
+      }
+    );
+  });
+
+  // Export JSON button
+  dom.mapExportBtn.addEventListener("click", function () {
+    UIController.hideMapError();
+    var mapName = UIController.getMapName();
+    var pairs = UIController.getMapPairs();
+
+    if (!mapName || mapName.trim() === "") {
+      UIController.showMapError("Enter a mapping name before exporting.");
+      return;
+    }
+    if (!pairs || pairs.length === 0) {
+      UIController.showMapError("Add at least one key-value pair before exporting.");
+      return;
+    }
+
+    MapDataIO.exportJSON(mapName, pairs);
   });
 
 })();

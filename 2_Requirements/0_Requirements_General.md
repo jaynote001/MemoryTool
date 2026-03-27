@@ -39,6 +39,7 @@ A web-based memorization practice tool that helps users learn and retain informa
 - Help users memorize short ordered lists and key-value mappings through repeated practice.
 - Support multiple recall orders (straight, reverse, jumbled) and directions (key-to-value, value-to-key for maps).
 - Provide preset modes (Memorization, Revision) for quick sessions and a Custom mode for full control.
+- Support data portability via JSON import/export for map mappings, enabling reuse across sessions and devices.
 - Be accessible on laptop and mobile via a hosted static site (GitHub Pages).
 
 ---

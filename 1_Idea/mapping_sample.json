@@ -1,0 +1,13 @@
+{
+    "mapping_name": "sample_mapping",
+    "mappings": [
+        {
+            "source": "source_field_1",
+            "target": "target_field_1"
+        },
+        {
+            "source": "source_field_2",
+            "target": "target_field_2"
+        }
+    ]
+}
